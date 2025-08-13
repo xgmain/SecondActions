@@ -1,8 +1,20 @@
-name: Output information
-on: workflow_dispatch
+name: Manual Workflow Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Choose the environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
 jobs:
-  info:
+  print-input:
     runs-on: ubuntu-latest
     steps:
-      - name: Output GitHub context
-        run: echo "${{ toJson(github) }}"
+      - name: Show selected environment
+        run: echo "You selected environment${{ github.event.inputs.environment }}"
